@@ -20,7 +20,7 @@ class Route
     route_params = {}
     match_data = pattern.match(req.path)
     match_data.names.each do |key|
-      route_params[key] = match_data[key]
+      route_params[key.to_sym] = match_data[key]
     end
 
     controller = controller_class.new(req, res, route_params)

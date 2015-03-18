@@ -1,0 +1,2 @@
+class HorsesController < ControllerBase
+end

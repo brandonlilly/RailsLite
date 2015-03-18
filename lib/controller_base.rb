@@ -1,12 +1,3 @@
-require_relative '../phase2/controller_base'
-require 'active_support'
-require 'active_support/core_ext'
-require 'erb'
-require 'byebug'
-
-require_relative './session'
-require_relative './params'
-
 class ControllerBase
   attr_reader :req, :res, :params, :session
 
@@ -22,7 +13,7 @@ class ControllerBase
   end
 
   def render(template_name)
-    file_path = "views/#{self.class.to_s.underscore}/#{template_name}.html.erb"
+    file_path = "app/views/#{self.class.to_s.underscore.sub('_controller', '')}/#{template_name}.html.erb"
     template =  File.read(file_path)
     html =      ERB.new(template).result(binding)
     render_content(html, 'text/html')
@@ -34,6 +25,7 @@ class ControllerBase
     res['location'] = url
     @already_built_response = true
     session.store_session(res)
+    flash.store_flash(res)
   end
 
   def render_content(content, content_type)
@@ -42,14 +34,19 @@ class ControllerBase
     self.res.body = content
     @already_built_response = true
     session.store_session(res)
+    flash.store_flash(res)
   end
 
   def session
     @session ||= Session.new(req)
   end
 
+  def flash
+    @flash ||= Flash.new(req)
+  end
+
   def invoke_action(name)
-    content = send(name)
+    self.send(name)
     # unless already_built_response?
     #   render_content(content, content_type)
     # end

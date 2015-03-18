@@ -1,0 +1,35 @@
+#!/usr/bin/env ruby
+require 'active_support/inflector'
+require 'colorize'
+
+def generate(arguments)
+  type, name = arguments
+  if type == 'controller'
+
+    controller_file = "app/controllers/#{name}_controller.rb"
+    if File.exists?(controller_file)
+      puts "ALREADY EXISTS #{controller_file}"
+    else
+      puts "CREATE #{controller_file}"
+      File.open(controller_file, 'w') do |file|
+        file.write("class #{name.camelcase}Controller < ControllerBase\nend")
+      end
+    end
+
+    begin
+      Dir.mkdir "app/views/#{name}"
+      puts "MKDIR app/views/#{name}"
+    rescue Errno::EEXIST
+      puts "ALREADY EXISTS app/views/#{name}"
+    end
+  end
+end
+
+case ARGV.first
+when 'g', 'generate'
+  generate ARGV.drop(1)
+when 's', 'server'
+  require_relative 'bin/server'
+else
+  puts 'Unrecognized command'
+end

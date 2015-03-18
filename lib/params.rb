@@ -12,7 +12,7 @@ class Params
   end
 
   def [](key)
-    @attributes[key]
+    @attributes[key.to_sym]
   end
 
   def to_s
@@ -34,7 +34,7 @@ class Params
   end
 
   def pair_to_hash(keys, value)
-    return { keys.first => value } if keys.size == 1
+    return { keys.first => value.to_sym } if keys.size == 1
     { keys.first => pair_to_hash(keys.drop(1), value) }
   end
 

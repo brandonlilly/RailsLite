@@ -1,0 +1,2 @@
+class Cats < ControllerBase
+end
