@@ -1,2 +1,0 @@
-class HorsesController < ControllerBase
-end

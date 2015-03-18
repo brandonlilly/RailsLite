@@ -16,4 +16,4 @@ require_relative 'flash'
 require_relative 'active-record-lite/model_base.rb'
 
 Dir["app/controllers/*.rb"].each {|file| require_relative "../#{file}" }
-# Dir["app/models/*.rb"].each      {|file| require_relative "../#{file}" }
+Dir["app/models/*.rb"].each      {|file| require_relative "../#{file}" }

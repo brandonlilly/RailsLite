@@ -47,8 +47,7 @@ class ControllerBase
 
   def invoke_action(name)
     self.send(name)
-    # unless already_built_response?
-    #   render_content(content, content_type)
-    # end
+    render name unless already_built_response?
   end
+
 end

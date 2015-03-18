@@ -4,7 +4,11 @@ class Flash
 
   def initialize(req)
     cookie = req.cookies.find { |cookie| cookie.name == COOKIE_NAME}
-    @attributes = cookie ? JSON.parse(cookie.value) : {}
+    @attributes = if cookie
+      Hash[JSON.parse(cookie.value).map{ |k, v| [k.to_sym, v] }]
+    else
+      {}
+    end
     @next_attr = {}
   end
 
@@ -13,11 +17,11 @@ class Flash
   end
 
   def [](key)
-    @next_attr[key]
+    @attributes[key.to_sym]
   end
 
   def []=(key, value)
-    @next_attr[key] = value
+    @next_attr[key.to_sym] = value
   end
 
   def attributes

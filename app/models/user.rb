@@ -1,5 +1,5 @@
 class User < ModelBase
 
-  has_many :cats
+  # has_many :cats
 
 end
