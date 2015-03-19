@@ -6,6 +6,7 @@ require 'active_support/core_ext'
 require 'active_support/inflector'
 require 'erb'
 require 'byebug'
+require 'yaml'
 
 require_relative 'controller_base'
 require_relative 'router'
