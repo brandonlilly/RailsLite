@@ -6,9 +6,7 @@ class UsersController < ControllerBase
   end
 
   def show
-    # @id = params[:id]
     @user = User.find(params[:id])
-    debugger
     render :show
   end
 
